@@ -82,7 +82,7 @@ class User:
 		if hasattr(self, "AllianceID"):
 			results[self.AllianceID] = self.AllianceName
 		for group in self.groups:
-			results[group.id] = group.name
+			results[0-group.id] = group.name
 		return results
 
 	def group_ids(self):

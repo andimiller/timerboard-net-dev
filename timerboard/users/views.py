@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, g, request, redirect, flash, abort
 from flask import jsonify
 from timerboard.models import *
+from timerboard.database import db_session
 from flask.ext.login import LoginManager, login_user, logout_user, login_required, current_user
 from flask import current_app as app
 
@@ -48,6 +49,9 @@ def timers():
     for timer in timers:
         if timer["user"] == current_user.CharacterID:
             timer["yours"] = True
+    for timer in timers:
+        if timer["moon"]==0:
+            timer["moon"]="-"
     return jsonify(timers=timers)
 
 
@@ -111,9 +115,9 @@ def post():
 			return redirect("/post")
 		newtimer = Timer(user=current_user.CharacterID, system=results[0], planet=results[1], moon=results[2], owner=results[3], time=results[4], notes=results[5], visibility=map(lambda x:int(x), sharedwith), type=results[6])
 
-		app.db.session.add(newtimer)
-		app.db.session.commit()
-		app.db.session.expire_all()
+		db_session.add(newtimer)
+		db_session.commit()
+		db_session.expire_all()
 		flash("Timer created.", "success")
 		return redirect("/")
 
@@ -134,8 +138,8 @@ def delete(id):
 	if target.user != current_user.CharacterID:
 		flash("You can't delete other people's timers.", "warning")
 		redirect("/")
-	app.db.session.delete(target)
-	app.db.session.commit()
+	db_session.delete(target)
+	db_session.commit()
 	flash("Timer successfully deleted.", "success")
-	redirect("/")
+	return redirect("/")
 
