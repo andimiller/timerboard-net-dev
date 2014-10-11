@@ -1,0 +1,11 @@
+{
+	"SQLALCHEMY_DATABASE_URI": "postgresql:///timerboard",
+	"SQLALCHEMY_ECHO": "true",
+	"CCP_SSO_CLIENTID": "3rdparty_timerboard",
+	"CCP_SSO_SECRET": "xk3Wm4Ws86fJhgufkZRLjW5kZFLOtcoTkdgELngS",
+	"CCP_SSO_DOMAIN": "https://sisilogin.testeveonline.com",
+	"CCP_SSO_AUTHORIZE": "/oauth/authorize",
+	"CCP_SSO_CALLBACK": "https://timerboard.net/login/callback",
+	"CCP_SSO_TOKEN": "/oauth/token",
+	"CCP_SSO_VERIFY": "/oauth/verify"
+}

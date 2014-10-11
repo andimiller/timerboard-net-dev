@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Post{% endblock %}
+
+{% block body %}
+
+<style type="text/css">
+	label {	font-size: large;
+		text-align: right
+	}
+	input {width: 70% !important;
+		float: right;
+	}
+	.form-control {width: 70% !important;
+		float: right;
+	}
+</style>
+
+<h1>Post</h1>
+<div class="container">
+	<div class="row">
+		<form class="well form-inline span8 offset2 custom-form" name="addtimer" action="/post" method="post">
+			<div class="control-group">
+				<div class="controls">
+					<h2>Create Timer</h2>
+					<h3>Basic Details:</h3>
+					<div class="clearfix">
+						<label for="system">System</label><input id="system" class="form-control" type="text" name="system" placeholder="Jita, PR-, J1520..." />
+					</div>
+					<div class="clearfix">
+						<label for="planet">Planet</label><input id="planet" class="form-control" type="text" name="planet" placeholder="II, VII, IX..." />
+					</div>
+					<div class="clearfix">
+						<label for="moon">Moon</label><input id="moon" class="form-control" type="text" name="moon" placeholder="1, 7, 42..." />
+					</div>
+					<div class="clearfix">
+						<label for="owner">Owner</label><input id="owner" class="form-control" type="text" name="owner" placeholder="BORT, TEST, PL..." />
+					</div>
+					<div class="clearfix">
+						<label for="type">Type</label>
+						<select name="type" class="form-control">
+							<option value=""i disabled selected>Please select a type.</option>
+							<option value="IHub Shield">IHub Shield</option>
+							<option value="IHub Armour">IHub Armour</option>
+							<option value="Station Shield">Station Shield</option>
+							<option value="Station Armour">Station Armour</option>
+							<option value="POS">POS</option>
+							<option value="Custom">Custom</option>
+						</select>
+					</div>
+					<div class="clearfix">
+						<label for="notes">Notes</label><input id="owner" class="form-control" type="text" name="notes" placeholder="POS? IHUB? Defenses?..."/>
+					</div>
+					<h3>Pick one time value:</h3>
+					<div class="clearfix">
+						<label for="time">Time (EVE)</label><input id="time" class="form-control" type="text" name="time" placeholder="Click for time picker" />
+					</div>
+					<div class="clearfix">
+						<label for="reltime">Timer</label><input id="reltime" class="form-control" type="text" name="reltime" placeholder="7D 30H 15S" />
+					</div>
+					<h3>Share with:</h3>
+					{% for id, name in current_user.get_access_map().iteritems() %}
+						<div class="clearfix">
+							{% if id!=current_user.CharacterID %}
+								<input type="checkbox" name="sharewith" value="{{ id }}">{{ name }}</input>
+							{% endif %}
+						</div>
+					{% endfor %}
+				</div>
+				<div class="controls">
+					<button class="form-control" type="submit" class="btn btn-primary" value="submit" />Submit</button>
+				</div>
+			</form>
+	</div>
+</div>
+
+
+<script>
+
+// Date/Time picker
+$(function() { $('#time').datetimepicker(); });
+// Autocomplete
+$( "#system" ).autocomplete({
+	source: "/systems",
+	minLength: 2
+});
+</script>
+{% endblock %}

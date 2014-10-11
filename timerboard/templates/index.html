@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+
+{% block body %}
+
+<style type="text/css">
+		label {	font-size: large;
+			text-align: right
+		}
+		input {width: 70%;
+			float: right;
+		}
+	</style>
+<script src="static/countdown.js" type="text/javascript"></script>
+<table class="table table-hover" id="timers">
+<thead>
+<tr>
+	<th><a href="#" onClick='sort("type");'>Type<span style="float:right;" id="type"></span></a></th>
+	<th><a href="#" onClick='sort("system");'>System<span style="float:right;" id="system"></span></a></th>
+	<th><a href="#" onClick='sort("region");'>Region<span style="float:right;" id="region"></span></a></th>
+	<th><a href="#" onClick='sort("planet");'>Planet<span style="float:right;" id="planet"></span></a></th>
+	<th><a href="#" onClick='sort("moon");'>Moon<span style="float:right;" id="moon"></span></a></th>
+	<th><a href="#" onClick='sort("owner");'>Owner<span style="float:right;" id="owner"></span></a></th>
+	<th><a href="#" onClick='sort("time");'>EVE Time<span style="float:right;" id="time"></span></a></th>
+	<th><a href="#" onClick='sort("remaining");'>Remaining<span style="float:right;" id="remaining"></span></a></th>
+	<th><a href="#" onClick='sort("notes");'>Notes<span style="float:right;" id="notes"></span></a></th>
+	<th><a href="#">Visibility<span style="float:right;" id="visibility"></span></a></th>
+	<th><a href="#">Controls<span style="float:right;" id="controls"></span></a></th>
+</tr>
+</thead>
+<tbody>
+<!-- placeholder --!>
+</tbody>
+</table>
+
+{% raw %}
+<script type="text/template" id="timer_template">
+<tr id="{{ id }}" class="timer_row {{ tag }}">
+	<td class="type">{{ type }}</td>
+	<td class="system"><a href="http://evemaps.dotlan.net/search?q={{ system }}">{{ system }}</a></td>
+	<td class="region">{{ region }}</td>
+	<td class="planet">{{ planet }}</td>
+	<td class="moon">{{ moon }}</td>
+	<td class="owner"><a href="http://evemaps.dotlan.net/search?q={{ owner }}">{{ owner }}</a></td>
+	<td class="time">{{ real_time }}</td>
+	<td class="remaining" style="width: 150px;"><span id="remaining.{{ id }}" style="font-family: monospace;"></span></td>
+	<td class="notes" style="word-break:break-all;">{{ notes }}</td>
+	<td class="visibility"><i class="fa fa-question" id="tooltip" data-toggle="tooltip" title="Visible to you due to the following groups: {{ visibility }}"></i></td>
+	<td class="controls">
+		{{#yours}}
+			<a class="btn btn-danger btn-xs" href="/delete/{{ id }}"><i class="fa fa-trash"></i>Delete</a>
+		{{/yours}}
+	</td>
+</tr>
+</script>
+{% endraw %}
+	<script>
+		$("#tooltip").tooltip();
+
+		timers = {};
+		var sortkey = "time";
+		var sort_asc = false;
+		
+		function do_sort() {
+			$(".timer_row").tsort("."+sortkey, {order: sort_asc ? "asc" : "desc"});
+			console.log(sortkey+" "+sort_asc);
+		}
+		var ICON_ASC = '<i class="fa fa-sort-amount-asc"/></i>';
+		var ICON_DESC = '<i class="fa fa-sort-amount-desc"/></i>';
+
+		function sort(field) {
+			if (sortkey==field) {
+				sort_asc = !sort_asc;
+				$("#"+sortkey)[0].innerHTML = sort_asc ? ICON_ASC : ICON_DESC;
+			} else {
+				$("#"+sortkey)[0].innerHTML=""
+				sortkey = field;
+				$("#"+sortkey)[0].innerHTML = sort_asc ? ICON_ASC : ICON_DESC;
+			}
+			do_sort();
+		}
+
+		function add_timer(i, timer) {
+			if (!(timer["id"] in timers)) {
+				timers[timer["id"]] = countdown(
+					function(ts) {
+						var style = "<span>";
+						if (new Date(timer["time"] * 1000) < new Date()) {
+							var style="<span class='text-danger strong'>-"
+							if (ts.hours > 1) {
+								tr = $("#"+timer["id"])
+								tr.fadeOut("slow", function() {
+									tr.remove();
+									window.clearInterval(timers[timer["id"]]);
+								});
+								console.log("fading out timer "+timer["id"])
+							}
+						}
+						document.getElementById("remaining." + timer["id"]).innerHTML = style+ts.days+"d "+ts.hours+"h "+ts.minutes+"m "+ts.seconds+"s </span>";
+					},
+					new Date(timer["time"] * 1000),
+					countdown.DAYS|countdown.HOURS|countdown.MINUTES|countdown.SECONDS);
+			}
+		}
+
+		var map = [
+			{"DTF": "danger", "N3PL": "success"},
+			{"DTF": "success", "N3PL": "danger"}
+		];
+		var mapindex=0;
+
+		function timer_to_row(i, timer) {
+			if ($("#"+timer["id"]).length == 0) {
+				timer["real_time"] = moment.utc(timer["time"] * 1000).format("YYYY-MM-DD HH:mm dddd");
+				if (timer["tag"] in map[mapindex]) {
+					timer["tag"] = map[mapindex][timer["tag"]];
+				}
+				var template = $("#timer_template").html();
+				var completed = Mustache.to_html(template, timer);
+				$('#timers tbody').append(completed);
+			}
+		}
+
+		function load_timers() {
+			console.log("trying to load new timers");
+			timers_data = [];
+			$.getJSON("api/timers", function(data) {
+				timers_data = data.timers;
+				$.each(timers_data, timer_to_row);
+				$.each(timers_data, add_timer);
+			})
+			do_sort();
+			setTimeout(do_sort, 1000);
+		}
+
+		load_timers();
+		sort("time");
+		window.setInterval(load_timers, 60000);
+	</script>
+
+{% endblock %}

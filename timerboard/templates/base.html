@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+	<head>
+		<!-- assets --!>
+		{% assets "js-vendor" -%}
+			<script type="text/javascript" src='{{ ASSET_URL }}'></script>
+		{% endassets -%}
+		{% assets "css-vendor", "css-custom" -%}
+			<link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" />
+		{% endassets -%}
+		<!-- end assets --!>
+		<script src="https://timers.pasta.gg/static/countdown.js" type="text/javascript"></script>
+		{% block head %}
+		<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
+		<title>{% block title %}{% endblock %} - timerboard.net</title>
+		{% endblock %}
+	</head>
+	<body>
+		<nav class="navbar navbar-default">
+			<div class="container">
+				<div class="navbar-header">
+					<button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button" data-target=".navbar-ex1-collapse">
+						<span class="sr-only">
+							Toggle navigation
+						</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/"><i class="fa fa-calendar"></i> timerboard.net</a></div>
+				<nav class="collapse navbar-collapse navbar-ex1-collapse" role="navigtion">
+					<ul class="nav navbar-nav">
+						{% if current_user.is_anonymous() %}
+						{% else %}
+						<li>
+							<a href="/post">Post</a>
+						</li>
+						<li>
+							<a href="/groups">Groups</a>
+						</li>
+						{% endif %}
+						<li>
+							<a href="/about">About</a>
+						</li>
+					</ul>
+					{% if current_user.is_anonymous() %}
+					<div class="navbar-form navbar-right">
+						<a href="/login"><img src="/static/sso_login.png" /></a>
+					</div>
+					{% else %}
+					<div class="nav navbar-nav navbar-right">
+						<img src="//image.eveonline.com/Character/{{ current_user.CharacterID }}_32.jpg" />
+						{{ current_user.CharacterName }} of {{ current_user.CorporationName }}
+						<a class="btn btn-default navbar-btn" href="/logout"><i class="icon-logout"></i>Logout</a>
+					</div>
+					{% endif %}
+				</nav>
+		</nav>
+		<div class="container">
+			{% with messages = get_flashed_messages(with_categories=true) %}
+				{% if messages %}
+					{% for category, message in messages %}
+					<div class="alert alert-{% if category != "message" %}{{ category }}{% else %}danger{% endif %}">
+						<a class="close" data-dismiss="alert">x</a>
+							{{ message }}
+						</a>
+					</div>
+					{% endfor %}
+				{% endif %}
+			{% endwith %}
+		</div>
+
+		<div class="container">
+			<h1>{% block header %}{% endblock %}</h1>
+			{% block body %}
+			{% endblock %}
+		</div>
+		<hr />
+		<footer>
+		<div class="container">
+			<p class=".small text-center text-muted">For any enquiries or comments, please contact <a href="http://evewho.com/pilot/Lucia+Denniard">Lucia Denniard</a>. This site is a deployment of <a href="https://bitbucket.org/Sylnai/timerboard-net">timerboard-net</a>, which is available under the <a href="http://opensource.org/licenses/MIT">MIT License</a>.</p>
+		</div>
+		</footer>
+	</body>
+</html>

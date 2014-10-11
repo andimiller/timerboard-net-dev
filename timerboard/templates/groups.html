@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Groups{% endblock %}
+
+{% block body %}
+	<h1>Groups</h1>
+
+	<p>You are currently in the following access groups:</p>
+	<ul>
+		{% for group in current_user.get_access_map().values() %}
+			<li>{{ group }}</li>
+		{% endfor %}
+	</ul>
+
+
+{% endblock %}

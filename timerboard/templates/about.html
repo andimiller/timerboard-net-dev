@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
+
+{% block body %}
+	<h1>About</h1>
+
+	<h2>What's a timer board?</h2>
+	<p>A timer board is a pretty old concept in EVE, it's a webpage used to track reinforcement timers, these are commonly tracked for things including:
+		<ul>
+			<li>Player Owned Starbases</li>
+			<li>Infrastructure Hub</li>
+			<li>Customs Offices</li>
+		</ul>
+	</p>
+	<h2>Who runs this website?</h2>
+	<p>Hi, I'm <a href="http://evewho.com/pilot/Lucia Denniard">Lucia Denniard</a>, head diplomat for <a href="http://evemaps.dotlan.net/alliance/Pasta_Syndicate">Pasta Syndicate</a>, I maintain multiple EVE related projects including <a href="http://wh.pasta.gg/">wormhol.es-zkb</a>, <a href="http://bitbucket.org/sylnai/pizza-auth/">pizza-auth</a> and <a href="http://bitbucket.org/sylnai/timerboard">timerboard</a> (which this website was born from).</p>
+
+	<p>Only I have access to this server, and it shares the same hardware as my other websites, if you don't believe you can trust me, I would recommend running your own board.</p>
+
+	<h2>Why do I need to sign in with an EVE Online account? Are you hacking my account?</h2>
+
+			<p>This website is built using CCP's Single Sign On, read about it <a href="http://community.eveonline.com/news/dev-blogs/eve-online-sso-and-what-you-need-to-know/">in this devblog</a>.
+
+			It allows me to authenticate who you are without asking for API keys or trusting the easily-faked ingame web browser. When you click the Login button it should redirect you to <a href="https://login.eveonline.com/">https://login.eveonline.com/</a> on a secure connection, you can click the green padlock in your web browser to check that it is a valid part of the official eveonline.com website.</p>
+
+
+{% endblock %}
