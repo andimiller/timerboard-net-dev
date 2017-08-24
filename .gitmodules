@@ -1,3 +1,6 @@
 [submodule "timerboard/static/pizza-bootstrap"]
 	path = timerboard/static/pizza-bootstrap
 	url = git@github.com:Sylnai/pizza-bootstrap.git
+[submodule "app/static/css/pizza-bootstrap"]
+	path = app/static/css/pizza-bootstrap
+	url = https://github.com/andimiller/pizza-bootstrap
