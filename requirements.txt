@@ -4,3 +4,5 @@ flask-assets
 cssutils
 flask-sqlalchemy
 pyyaml
+redis_wrap
+psycopg2
