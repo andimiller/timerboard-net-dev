@@ -13,7 +13,7 @@ Base = declarative_base()
 Base.query = db_session.query_property()
 
 def init_db():
-	import timerboard.models
+	import models
 	Base.metadata.create_all(bind=engine)
 
 def get_visible_timers(current_user):

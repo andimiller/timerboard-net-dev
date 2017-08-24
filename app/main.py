@@ -1,9 +1,9 @@
 from flask import Flask, render_template, send_from_directory, url_for, redirect
 from flask.ext.assets import Environment, Bundle
 from flask.ext.login import LoginManager
-from timerboard.assets import assets
+from assets import assets
 from flask.ext.sqlalchemy import SQLAlchemy
-from timerboard.models import *
+from models import *
 import redis_wrap
 
 import os, json
@@ -42,9 +42,9 @@ def create_app():   # We could pass a config object here
     with app.app_context():
         app.db.create_all()
 
-    from timerboard.users.views import mod as users_blueprint
-    from timerboard.assets import mod as assets_blueprint
-    from timerboard.login import mod as login_blueprint
+    from app.users.views import mod as users_blueprint
+    from app.assets import mod as assets_blueprint
+    from app.login import mod as login_blueprint
     app.register_blueprint(users_blueprint)
     app.register_blueprint(assets_blueprint)
     app.register_blueprint(login_blueprint)
@@ -54,3 +54,5 @@ def create_app():   # We could pass a config object here
         db.session.remove()
 
     return app
+
+app = create_app()

@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.dialects.postgresql import ARRAY
-from timerboard.database import Base
+from database import Base
 import time
 
 

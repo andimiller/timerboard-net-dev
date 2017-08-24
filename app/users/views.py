@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, g, request, redirect, flash, abort
 from flask import jsonify
-from timerboard.models import *
-from timerboard.database import db_session
+from app.models import *
+from app.database import db_session
 from flask.ext.login import LoginManager, login_user, logout_user, login_required, current_user
 from flask import current_app as app
 

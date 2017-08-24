@@ -9,8 +9,8 @@ from flask import request, jsonify, redirect, flash, session
 from flask.ext.login import LoginManager, login_user, logout_user, login_required, current_user
 import eveapi
 import redis_wrap
-from timerboard.main import load_user
-from timerboard.models import *
+from .main import load_user
+from .models import *
 
 import json
 
