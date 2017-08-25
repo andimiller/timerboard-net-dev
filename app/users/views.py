@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, g, request, redirect, flash, abort
 from flask import jsonify
-from app.models import *
-from app.database import db_session
+from models import *
+from database import db_session
 from flask.ext.login import LoginManager, login_user, logout_user, login_required, current_user
 from flask import current_app as app
 
@@ -31,7 +31,7 @@ def gettimers():
 
 @mod.route("/")
 def index():
-    if current_user.is_anonymous():
+    if current_user.is_anonymous:
 	    return render_template("index_guest.html")
     else:
 	    return render_template("index.html", timers=gettimers())

@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 # Set up SQLAlchemy
 db = SQLAlchemy()
-engine = create_engine("postgres:///timerboard")
+engine = create_engine("postgres://timerboard-postgres/timerboard")
 db_session = scoped_session(sessionmaker(autocommit=False,
 	autoflush=False,
 	bind=engine))

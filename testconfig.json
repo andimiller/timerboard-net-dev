@@ -1,5 +1,5 @@
 {
-	"SQLALCHEMY_DATABASE_URI": "postgresql:///timerboard",
+	"SQLALCHEMY_DATABASE_URI": "postgresql://postgres:foobar@timerboard-postgres:5432/postgres",
 	"SQLALCHEMY_ECHO": "true",
 	"CCP_SSO_CLIENTID": "3rdparty_timerboard",
 	"CCP_SSO_SECRET": "xk3Wm4Ws86fJhgufkZRLjW5kZFLOtcoTkdgELngS",

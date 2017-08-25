@@ -30,7 +30,7 @@
 					<a class="navbar-brand" href="/"><i class="fa fa-calendar"></i> timerboard.net</a></div>
 				<nav class="collapse navbar-collapse navbar-ex1-collapse" role="navigtion">
 					<ul class="nav navbar-nav">
-						{% if current_user.is_anonymous() %}
+						{% if current_user.is_anonymous %}
 						{% else %}
 						<li>
 							<a href="/post">Post</a>
@@ -43,7 +43,7 @@
 							<a href="/about">About</a>
 						</li>
 					</ul>
-					{% if current_user.is_anonymous() %}
+					{% if current_user.is_anonymous %}
 					<div class="navbar-form navbar-right">
 						<a href="/login"><img src="/static/sso_login.png" /></a>
 					</div>

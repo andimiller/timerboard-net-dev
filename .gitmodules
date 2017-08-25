@@ -4,3 +4,9 @@
 [submodule "app/static/css/pizza-bootstrap"]
 	path = app/static/css/pizza-bootstrap
 	url = https://github.com/andimiller/pizza-bootstrap
+[submodule "app/static/~pizza-bootstrap"]
+	path = app/static/~pizza-bootstrap
+	url = https://github.com/andimiller/pizza-bootstrap
+[submodule "app/static/pizza-bootstrap"]
+	path = app/static/pizza-bootstrap
+	url = https://github.com/andimiller/pizza-bootstrap
