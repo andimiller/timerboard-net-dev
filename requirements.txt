@@ -20,7 +20,7 @@ redis==2.10.6
 redis-wrap==1.4.5
 requests==2.18.4
 six==1.10.0
-SQLAlchemy==1.1.13
+SQLAlchemy==1.3.0
 urllib3==1.22
 virtualenv==15.1.0
 webassets==0.12.1
