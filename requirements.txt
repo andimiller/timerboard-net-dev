@@ -18,7 +18,7 @@ python-dateutil==2.6.1
 PyYAML==3.12
 redis==2.10.6
 redis-wrap==1.4.5
-requests==2.18.4
+requests==2.20.0
 six==1.10.0
 SQLAlchemy==1.1.13
 urllib3==1.22
